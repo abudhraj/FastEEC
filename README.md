@@ -95,7 +95,8 @@ be provided in this order.
 We include a sample input file generated using publically available "MIT Open Data",
 which utilizes the reprocessed data on jets from the CMS 2011A Open Data. This 
 data.txt file consists of 100 000 jets with transverse momenta 500 < pT < 550 GeV 
-and rapidity |eta| < 1.9.
+and rapidity |eta| < 1.9. The input file can be downloaded from the release along with 
+other source files containing the codes.
 
 # Instructions to read the output_file
  
@@ -112,6 +113,15 @@ The other files correspond to the different approximations we propose with:
 - `test_4pt_8.out`, `test_4pt_32.out` and `test_4pt_64.out` specifying the use 
 of use constant resolution factors of 8, 32 and 64 with C/A clustering.
 - The version with k_T clustering and f=k_T,min^2 is called `test_4pt_1_kt.out`.
+
+These output files can also be reproduced by executing the following from the
+command line:
+```
+./eec_fast ../data.txt 100000 4 8 -5 75 test_4pt_8.out
+./eec_fast ../data.txt 100000 4 32 -5 75 test_4pt_32.out
+./eec_fast ../data.txt 100000 4 64 -5 75 test_4pt_64.out
+./eec_fast_kt ../data.txt 100000 4 1 -5 75 test_4pt_1_kt.out
+```
 
 There is also a small Mathematica notebook enclosed with this release called 
 `eec_analysis.nb`. The notebook illustrates explicitly how the output files can be 
