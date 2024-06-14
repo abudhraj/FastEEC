@@ -24,7 +24,7 @@ implement higher powers of transverse momentum weights are : `eec_fast_weight.cc
 If you use our package in research, please include a citation to
 
   A. Budhraja, W. Waalewijn, Fast Evaluation of N-point Energy Correlators, 
-  arXiv: 2406.xxxxx 
+  arXiv: 2406.08577 
 
 # Instructions for users
 
