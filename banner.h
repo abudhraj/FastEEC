@@ -17,7 +17,7 @@ void printHeader() {
     std::cout << "             FastEEC 0.1, developed by A. Budhraja and W. Waalewijn\n";
     std::cout << "                     https://github.com/abudhraj/FastEEC\n";
     std::cout << "\n";
-    std::cout << "   Please cite arXiv:2406.XXXX if you use this package for scientific work.\n";
+    std::cout << "   Please cite arXiv:2406.08577 if you use this package for scientific work.\n";
     std::cout << "       It uses FastJet package by M. Cacciari, G. Salam and G. Soyez.\n";
     std::cout << "                         See license for details.\n";
     std::cout << "\n";
