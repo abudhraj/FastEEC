@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
     }
     
     if (nsub < 2 || nsub > 16){
-        cout << "Error: Number of subjets must be between 2 and 14.\n";
+        cout << "Error: Number of subjets must be between 2 and 16.\n";
         return 0;
     }
     
