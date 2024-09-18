@@ -2,29 +2,39 @@ This is the README file for the FastEEC project available at
     
   https://github.com/abudhraj/FastEEC
 
-which provides a fast evaluation of higher-point energy correlators. Our code uses 
-the fastjet package for jet reclustering and resolving branches, exploiting that
-for correlations at a given angle, radiation whose separation is much smaller 
-can be treated as one. Our default option is to cluster with Cambridge/Aachen and 
-use a fixed resolution scale f, but we also found that the kT algorithm with
-resolution scale f = k_T,min^2 performs particularly well. These are provided
-in the files : `eec_fast.cc` (for C/A clustering) and `eec_fast_kt.cc` (for 
-k_T clustering).
+which provides a fast evaluation of higher-point energy correlators for both integer 
+as well as non-integer values of N. Our code uses the fastjet package for jet 
+reclustering and resolving branches, exploiting that for correlations at a given angle, 
+radiation whose separation is much smaller can be treated as one. For integer N values, 
+our default option is to cluster with Cambridge/Aachen and use a fixed resolution scale f, 
+but we also found that the kT algorithm with resolution scale f = k_T,min^2 performs 
+particularly well. These are provided in the files: `eec_fast.cc` (for C/A clustering) 
+and `eec_fast_kt.cc` (for k_T clustering). For the case of non-integer N values, we use the
+Cambridge/Aachen to re-cluster the jet but now with a fixed number of subjets `nsub` in order
+to optimize the working efficiency of our code. *Note that for non-integer N, this is sometimes 
+referred to as ν-point energy correlator or ν-correlator (in short).* The code is provided in the file: `eec_fast_nu_point.cc`.
 
 Additionally, we provide the option to use higher powers of transverse momenta to 
-compute the projected energy correlator. Once again, two flavors of jet clustering, 
-i.e., Cambridge/Aachen and k_T are provided. In this case, as the higher power 
+compute the projected energy correlator for integer N. Once again, two flavors of jet 
+clustering, i.e., Cambridge/Aachen and k_T are provided. In this case, as the higher power 
 reduces the soft sensitivity, a reasonable description for weight kappa = 2 can even 
 be obtained by using resolution scale as small as f=8, corresponding to a relative 
 error of about 0.5-1.5% for various values of N. We achieve a substantial gain in 
 computation time, up to as high as four orders of magnitude, for N=7. The files that 
-implement higher powers of transverse momentum weights are : `eec_fast_weight.cc` 
+implement higher powers of transverse momentum weights are: `eec_fast_weight.cc` 
 (for C/A) and `eec_fast_kt_weight.cc` (for k_T).
+
+**version 0.2: extends to N-point energy correlators for non-integer N**
 
 If you use our package in research, please include a citation to
 
+  A. Budhraja, H. Chen and W. Waalewijn, ν-point energy correletors with FastEEC: 
+  small x physics from LHC jets, arXiv: 2409.xxxx.
+
+and
+  
   A. Budhraja, W. Waalewijn, Fast Evaluation of N-point Energy Correlators, 
-  arXiv: 2406.08577 
+  arXiv: 2406.08577. 
 
 # Instructions for users
 
@@ -86,6 +96,17 @@ code both with weight = 1 (`eec_fast_kt.cc`) and weight &ne; 1
 is now allowed. Note that in this case the resolution factor is f = f' k_T,min^2, 
 where the command-line parameter is f'.
 
+For the code for non-integer ν-point correlators, the command line input replaces 
+the jet resolution parameter with the number of subjets as
+```
+./eec_fast_nu_point input_file events N nsub minbin nbins output_file
+```
+with
+> 17 > number of subjets (nsub) > 1 <br/>
+
+The same code can be used to compute the ν-point energy correlator for integer values of
+ν as well, though to reach the same level of accuracy it is slower.
+
 # Instructions for the input_file
 
 The input_file consists of a line for each particle, with four numbers in each line.
@@ -95,8 +116,7 @@ be provided in this order.
 We include a sample input file generated using publically available "MIT Open Data",
 which utilizes the reprocessed data on jets from the CMS 2011A Open Data. This 
 data.txt file consists of 100 000 jets with transverse momenta 500 < pT < 550 GeV 
-and rapidity |eta| < 1.9. The input file can be downloaded from the release along with 
-other source files containing the codes.
+and rapidity |eta| < 1.9. 
 
 # Instructions to read the output_file
  
@@ -114,15 +134,6 @@ The other files correspond to the different approximations we propose with:
 of use constant resolution factors of 8, 32 and 64 with C/A clustering.
 - The version with k_T clustering and f=k_T,min^2 is called `test_4pt_1_kt.out`.
 
-These output files can also be reproduced by executing the following from the
-command line:
-```
-./eec_fast ../data.txt 100000 4 8 -5 75 test_4pt_8.out
-./eec_fast ../data.txt 100000 4 32 -5 75 test_4pt_32.out
-./eec_fast ../data.txt 100000 4 64 -5 75 test_4pt_64.out
-./eec_fast_kt ../data.txt 100000 4 1 -5 75 test_4pt_1_kt.out
-```
-
 There is also a small Mathematica notebook enclosed with this release called 
 `eec_analysis.nb`. The notebook illustrates explicitly how the output files can be 
 read. We also provide instructions to reproduce the plot shown in the paper for N=4 
@@ -136,7 +147,7 @@ with a jet radius R = 1.5 returns exactly one jet. The jet radius in the code do
 not need to match that used to obtain the jets used as input, in fact it should be 
 sufficiently larger than it. If needed, the jet radius in the code can be modified 
 by changing the following line in `eec_compute.h` file (for weight =1) or 
-`eec_higher_weight.h` (for weight &ne; 1) 
+`eec_higher_weight.h` (for weight &ne; 1) or `eec_nu_point.h` (for ν-point correlators)
 
 ```
 const double R = 1.5;
@@ -148,7 +159,8 @@ Although any number of bins can be specified, the code internally fixes a large
 dimension in which the histogrammed data is stored. This value is set to 1000 in the 
 current implementation, corresponding to a maximum of 1000 bins. For users who would 
 want to utilize more bins, the dimension specified in the `eec_compute.h` file (for 
-weight =1) or `eec_higher_weight.h` (for weight &ne; 1) must be changed in the line
+weight =1) or `eec_higher_weight.h` (for weight &ne; 1) or `eec_nu_point.h` (for ν-point 
+correlators) must be changed in the line
 
 ```
 std::vector<double> res(1000);
