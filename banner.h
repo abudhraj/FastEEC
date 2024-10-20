@@ -1,4 +1,4 @@
-// FastEEC 0.2. This file is a part of FastEEC. The 
+// FastEEC 0.3. This file is a part of FastEEC. The 
 // file generates the banner for the project developed 
 // by A. Budhraja and W. Waalewijn. 
 //
@@ -14,10 +14,10 @@
 // Define the printHeader function
 void printHeader() {
     std::cout << "\n";
-    std::cout << "             FastEEC 0.2, developed by A. Budhraja and W. Waalewijn\n";
+    std::cout << "             FastEEC 0.3, developed by A. Budhraja and W. Waalewijn\n";
     std::cout << "                     https://github.com/abudhraj/FastEEC\n";
     std::cout << "\n";
-    std::cout << "   Please cite arXiv:2409.XXXX, 2406.08577 if you use this package for scientific work.\n";
+    std::cout << "   Please cite arXiv:2410.XXXX, 2409.12235, 2406.08577 if you use this package for scientific work.\n";
     std::cout << "       It uses FastJet package by M. Cacciari, G. Salam and G. Soyez.\n";
     std::cout << "                         See license for details.\n";
     std::cout << "\n";
