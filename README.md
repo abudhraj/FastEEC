@@ -12,7 +12,11 @@ particularly well. These are provided in the files: `eec_fast.cc` (for C/A clust
 and `eec_fast_kt.cc` (for k_T clustering). For the case of non-integer N values, we use the
 Cambridge/Aachen to re-cluster the jet but now with a fixed number of subjets `nsub` in order
 to optimize the working efficiency of our code. *Note that for non-integer N, this is sometimes 
-referred to as ν-point energy correlator or ν-correlator (in short).* The code is provided in the file: `eec_fast_nu_point.cc`.
+referred to as ν-point energy correlator or ν-correlator (in short).* The code is provided in the 
+file: `eec_fast_nu_point.cc`. We now provide a new implementation of the N-point projected energy 
+correlators applicable to any (integer or non-integer) N values that we recently proposed. This new
+implementation achieves a computational time of M^2 log(M), for any N value. The code is provided
+in the file: `eec_angles.cc`. 
 
 Additionally, we provide the option to use higher powers of transverse momenta to 
 compute the projected energy correlator for integer N. Once again, two flavors of jet 
@@ -24,12 +28,14 @@ computation time, up to as high as four orders of magnitude, for N=7. The files 
 implement higher powers of transverse momentum weights are: `eec_fast_weight.cc` 
 (for C/A) and `eec_fast_kt_weight.cc` (for k_T).
 
-**version 0.2: extends to N-point energy correlators for non-integer N**
+**version 0.3: includes the implementation of projected N-point energy correlators for any (integer or non-integer) N, using the new proposed parameterization**
 
 If you use our package in research, please include a citation to
 
+  S. Alipour-fard, A. Budhraja, J. Thaler and W. Waalewijn, New Angles on Energy Correlators, arXiv: 2410.XXXX,
+
   A. Budhraja, H. Chen and W. Waalewijn, ν-point energy correletors with FastEEC: 
-  small x physics from LHC jets, arXiv: 2409.xxxx.
+  small x physics from LHC jets, arXiv: 2409.12235.
 
 and
   
@@ -106,6 +112,14 @@ with
 
 The same code can be used to compute the ν-point energy correlator for integer values of
 ν as well, though to reach the same level of accuracy it is slower.
+
+For the new implementation of the N-point correlators, we do not use any approximations, 
+hence the command line inputs only require the following 
+```
+./eec_angles input_file events N minbin nbins output_file
+```
+The same code can be used for any N and provides a drastic computational speed up, without
+any approximations.
 
 # Instructions for the input_file
 
